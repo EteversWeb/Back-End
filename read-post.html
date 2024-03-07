@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button[type="submit"] {
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #060a0f;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #333;
+}
+
+    </style>
+</head>
+<body>
+{{diary['title']}}
+{{diary['date']}}
+{{diary['cont']}}
+<form action="/read-post">
+    {% if prev_diary_id != 0 %}
+    <button name="diary_id" value="{{prev_diary_id}}" type="submit">< 이전글</button>
+    {% endif %}
+    
+    {% if next_diary_id != 0 %}
+    <button name="diary_id" value="{{next_diary_id}}" type="submit">다음글 ></button>
+    {% endif %}
+</form>
+</body>
+</html>

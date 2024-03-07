@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feeling Graph</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        img {
+            margin-top: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #060a0f;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Feelings</h1>
+    <img src="data:image/png;base64,{{ plot_url }}">
+    
+    <form action="/submit-feeling" method="post">
+        <button type="submit" name="feeling" value="very bad">Very Bad</button>
+        <button type="submit" name="feeling" value="bad">Bad</button>
+        <button type="submit" name="feeling" value="normal">Normal</button>
+        <button type="submit" name="feeling" value="good">Good</button>
+        <button type="submit" name="feeling" value="very good">😍</button>
+    </form>
+</body>
+</html>

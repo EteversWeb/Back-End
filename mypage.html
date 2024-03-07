@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+.firstH1 {
+    text-align: center;
+    margin-top: 50px;
+    color: #333;
+}
+
+.searchContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.searchContainer form {
+    display: inline-block;
+}
+
+.searchFild {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.searchButton {
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #060a0f;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+th {
+    background-color: #060a0f;
+    color: #fff;
+}
+
+.center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.center a {
+    margin: 0 10px;
+    color: #060a0f;
+    text-decoration: none;
+}
+
+.greylist {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.gradient {
+    background: linear-gradient(to right, #060a0f, #060a0f);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <h1 class="firstH1">마이페이지</h1>
+    <div class="searchContainer">
+        <form action="/search", method="get">
+            <input class="searchFild" type="text" name="term" placeholder="검색어를 입력해주세요">
+            <button class="searchButton" type="submit">검색</button>
+        </form>
+        <form action="/mypage", method="get">
+            <select id="pagenation" name="pagenation">
+                {% for value in pagenation_list %}
+                <option value="{{value}}">{{value}}개씩 보기</option>
+                {% endfor %}
+              </select>
+              <button type="submit">적용</button>
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>내용</th>
+                <th>작성일자</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for (id, title, cont, date) in cur_diary_list %}
+            <tr>
+
+                <td class="left">
+                    <form action="/read-post", method="get">
+                        <button name="diary_id" class="btn btn-link" value="{{id}}">{{title}}</button>
+                    </form> 
+                </td>
+
+                {% if cont | length > 20 %}
+                <td class="left">{{cont[:20] + "..."}}</td>
+                {% else %}
+                <td class="left">{{cont}}</td>
+                {% endif %}
+
+                <td class="center">{{date}}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="center">
+        {% if cur_page - 1 in pages %}
+        <a href="/mypage?page={{cur_page-1}}"><이전</a>
+        {% endif %}
+        {% for page in pages %}
+        <a href="/mypage?page={{page}}">
+            {% if page == cur_page %}
+            <strong>{{page}}</strong>
+            {% else %}
+            {{page}}
+            {% endif %}
+        </a>
+        {% endfor %}
+        {% if cur_page + 1 in pages %}
+        <a href="/mypage?page={{cur_page+1}}">다음 ></a>
+        {% endif %}
+    </div>
+
+    <span class="center">
+        <form action="/mypage", method="get">
+            <button name="page" value="1" class="greylist">목록</button>
+        </form>
+        <form action="/write-post", method="get">
+            <button class="gradient">글쓰기</button>
+        </form>
+    </span>
+</body>
+</html>
